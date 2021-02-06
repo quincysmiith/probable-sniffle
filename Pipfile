@@ -11,6 +11,7 @@ python-dotenv = "*"
 flask-wtf = "*"
 flask-sqlalchemy = "*"
 gspread = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.7"

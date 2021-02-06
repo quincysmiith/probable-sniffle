@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>Health Logger</h1>
+    </div>
+</div>
+
+<div class="container">
+    <h2> Weight </h2>
+    <form action="/weightlog" method="POST">
+        {{ weight_form.hidden_tag() }}
+        <div class="form-group">
+            <p></p>
+            {{ weight_form.user.label }} 
+            <p></p>
+            {{ weight_form.user() }}
+            <p></p>
+        </div>
+        <div class="form-group">
+            <p></p>
+            {{ weight_form.weight.label }} 
+            <p></p>
+            {{ weight_form.weight() }}
+            <p></p>
+        </div>
+        <div class="form-group">
+            <p></p>
+            {{ weight_form.date.label }} 
+            <p></p>
+            {{ weight_form.date() }}
+            <p></p>
+        </div>
+            {{ weight_form.submit() }}
+        
+    </form>
+</div>
+{% endblock %}

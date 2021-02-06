@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>Utilities for Marquin</h1>
+    </div>
+</div>
+
+<div class="container">
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            
+            {{ form.orig.label }} 
+            <p></p>
+            {{ form.orig() }}
+        </div>
+        <div class="form-group">
+            <p></p>
+            {{ form.new.label }} 
+            <p></p>
+            {{ form.new() }}
+            <p></p>
+        </div>
+            {{ form.submit() }}
+        
+    </form>
+</div>
+{% endblock %}

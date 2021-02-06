@@ -1,0 +1,5 @@
+.env
+.flaskenv
+*.pyc
+__pycache__/*
+marquin-personal-tools-5f84ef73756b.json

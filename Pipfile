@@ -12,6 +12,7 @@ flask-wtf = "*"
 flask-sqlalchemy = "*"
 gspread = "*"
 gunicorn = "*"
+icecream = "*"
 
 [requires]
 python_version = "3.7"

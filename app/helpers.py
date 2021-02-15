@@ -3,6 +3,7 @@ import tempfile
 import json
 import gspread
 from google.oauth2 import service_account
+from icecream import ic
 
 def google_sheets_connection():
     """Helper function to pull create json credentials
@@ -37,7 +38,9 @@ def google_sheets_connection():
     'https://www.googleapis.com/auth/drive'
     ]
 
-    
+
+
+    ic(os.environ['GOOGLE_API_CREDS2'])
 
     credentials = service_account.Credentials.from_service_account_info(
         json.loads(

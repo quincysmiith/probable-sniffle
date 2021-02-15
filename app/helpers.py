@@ -24,11 +24,13 @@ def google_sheets_connection():
 
 
 
-    ic(os.environ['GOOGLE_API_CREDS2'])
+    #ic(os.environ['GOOGLE_API_CREDS2'])
+
+    ic(os.environ['GOOGLE_API_CREDS2'].replace("'\'", "'"))
 
     credentials = service_account.Credentials.from_service_account_info(
         json.loads(
-            os.environ['GOOGLE_API_CREDS2']),
+            os.environ['GOOGLE_API_CREDS2'].replace("'\'", "'")),
         scopes = scopes)
 
     gc = gspread.authorize(credentials)

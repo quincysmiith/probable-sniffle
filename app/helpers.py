@@ -24,7 +24,7 @@ def google_sheets_connection():
 
 
 
-    #ic(os.environ['GOOGLE_API_CREDS2'])
+    ic(os.environ['GOOGLE_API_CREDS2'])
 
     ic(os.environ['GOOGLE_API_CREDS2'].replace("'\'", "'"))
 

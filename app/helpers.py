@@ -15,23 +15,7 @@ def google_sheets_connection():
         gc = gspread.service_account()
     """
 
-    my_dict = {}
 
-    my_dict['type'] = os.getenv("TYPE")
-    my_dict['project_id'] = os.getenv("PROJECT_ID")
-    my_dict['private_key_id'] = os.getenv("PRIVATE_KEY_ID")
-    my_dict['private_key'] = os.getenv("PRIVATE_KEY")
-    my_dict['client_email'] = os.getenv("CLIENT_EMAIL")
-    my_dict['client_id'] = os.getenv("CLIEhttps://gspread.readthedocs.io/en/latest/oauth2.html#for-bots-using-service-accountN_URI")
-    my_dict['auth_provider_x509_cert_url'] = os.getenv("AUTH_PROVIDER_X509_CERT_URL")
-    my_dict['client_x509_cert_url'] = os.getenv("CLIENT_X509_CERT_URL")
-
-
-    my_temp = tempfile.NamedTemporaryFile('w+')
-    my_temp.write(json.dumps(my_dict))
-    my_temp.seek(0)
-
-    #gc = gspread.service_account(filename=my_temp.name)
 
     scopes = [
     'https://www.googleapis.com/auth/spreadsheets',

@@ -30,7 +30,7 @@ def google_sheets_connection():
 
     credentials = service_account.Credentials.from_service_account_info(
         json.loads(
-            os.environ['GOOGLE_API_CREDS2'].replace("'\'", "'")),
+            os.environ['GOOGLE_API_CREDS2']),
         scopes = scopes)
 
     gc = gspread.authorize(credentials)

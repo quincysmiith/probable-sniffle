@@ -27,4 +27,13 @@
         
     </form>
 </div>
+
+{% if something %}
+<div class="container">
+    <p>{{ something["volume_diff"] }}</p>
+    <p>{{ something["perc_diff"] }}</p>
+</div>
+{% endif %}
+
+
 {% endblock %}

@@ -1,11 +1,16 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
 from flask.helpers import url_for
 from .forms import PercDiffForm, WeightForm
-from .helpers import google_sheets_connection
+from .helpers import google_sheets_connection, perc_diff
 from icecream import ic
 from dateutil.parser import parse
 
 main = Blueprint("main", __name__)
+
+
+@main.errorhandler(404)
+def page_not_found(error):
+    return render_template("404.html"), 404
 
 
 @main.route("/")
@@ -17,6 +22,16 @@ def main_index():
 def render():
 
     form = PercDiffForm()
+
+    if form.validate_on_submit():
+        orig = float(form.orig.data)
+        new = float(form.new.data)
+
+        results = perc_diff(orig, new)
+        ic(results)
+
+        return render_template("percdiff.html", form=form, something=results)
+
     return render_template("percdiff.html", form=form)
 
 
@@ -59,6 +74,10 @@ def log_health_page():
 
         return redirect(url_for("main.log_health_page"))
 
-    # exercise_form =
-
     return render_template("healthlog.html", weight_form=weight_form)
+
+
+@main.route("/gtmhunter", methods=["GET", "POST"])
+def gtmhunter():
+
+    return render_template("404.html")

@@ -4,3 +4,4 @@
 __pycache__/*
 marquin-personal-tools-5f84ef73756b.json
 creds.json
+app/templates/flask_app_platform.code-workspace

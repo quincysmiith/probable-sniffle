@@ -14,3 +14,6 @@ To Do Tools:
 - Har file parser
 - GTM Hunter
 - Adobe call parser
+- Yoga / stretch day tracker
+- 1 hour reading day tracker
+- slack functions :: Weather updater, surf conditions

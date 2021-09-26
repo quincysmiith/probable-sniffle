@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, FloatField
+from wtforms import StringField, SubmitField, FloatField, SelectField
 from wtforms.validators import DataRequired, NumberRange, Regexp
 
 
@@ -25,3 +25,26 @@ class WeightForm(FlaskForm):
         ],
     )
     submit = SubmitField("Submit")
+
+
+class YogaForm(FlaskForm):
+
+    user = StringField("User", validators=[DataRequired()])
+
+    activity = SelectField(
+        u"Wellness Activity",
+        choices=["Yoga", "Meditation", "1 hour reading", "Strength training"],
+    )
+
+    submit = SubmitField("Submit completed wellness activity")
+
+
+class PracticeForm(FlaskForm):
+
+    user = StringField("User", validators=[DataRequired()])
+
+    activity = SelectField(
+        u"Wellness Activity", choices=["Poker", "Surfing", "Data Engineering", "Python"]
+    )
+
+    submit = SubmitField("Submit completed wellness activity")

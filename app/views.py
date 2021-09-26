@@ -1,9 +1,15 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
 from flask.helpers import url_for
-from .forms import PercDiffForm, WeightForm
-from .helpers import google_sheets_connection, perc_diff
+from .forms import PercDiffForm, WeightForm, YogaForm
+from .helpers import (
+    google_sheets_connection,
+    perc_diff,
+    save_htmls_names_to_sheet,
+    tidy_acceptable_users,
+)
 from icecream import ic
 from dateutil.parser import parse
+from datetime import datetime
 
 main = Blueprint("main", __name__)
 
@@ -81,3 +87,42 @@ def log_health_page():
 def gtmhunter():
 
     return render_template("404.html")
+
+
+@main.route("/viewhtml/<id>")
+def viewhtml(id):
+
+    # save_htmls_names_to_sheet()
+    html_list = get_html_list_from_sheets()
+
+    single_html = html_list[id]
+
+    return render_template("htmlviewer.html", single_html)
+
+
+@main.route("/wellness", methods=["GET", "POST"])
+def wellness():
+
+    yoga_form = YogaForm()
+
+    if yoga_form.validate_on_submit():
+        gc = google_sheets_connection()
+        sh = gc.open("Wellness Log")
+        worksheet = sh.worksheet("Sheet1")
+
+        user = yoga_form.user.data
+        activity = yoga_form.activity.data
+        a_date = str(datetime.utcnow().date())
+
+        user = tidy_acceptable_users(user)
+
+        if user in ["marquin", "caroline"]:
+            worksheet.append_row([user, activity, a_date])
+
+            my_message = f"{user} logged a {activity} activity on {a_date}."
+            flash(my_message)
+            ic(my_message)
+
+        return redirect(url_for("main.wellness"))
+
+    return render_template("wellnesslog.html", yoga_form=yoga_form)

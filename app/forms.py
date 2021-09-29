@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, FloatField, SelectField
 from wtforms.validators import DataRequired, NumberRange, Regexp
+from datetime import datetime
 
 
 class PercDiffForm(FlaskForm):
@@ -23,6 +24,7 @@ class WeightForm(FlaskForm):
                 message="Date should be in format YYYY-MM-DD",
             ),
         ],
+        default=str(datetime.utcnow().date()),
     )
     submit = SubmitField("Submit")
 
@@ -36,7 +38,7 @@ class YogaForm(FlaskForm):
         choices=["Yoga", "Meditation", "1 hour reading", "Strength training"],
     )
 
-    submit = SubmitField("Submit completed wellness activity")
+    submit = SubmitField("Submit wellness activity")
 
 
 class PracticeForm(FlaskForm):
@@ -47,4 +49,4 @@ class PracticeForm(FlaskForm):
         u"Wellness Activity", choices=["Poker", "Surfing", "Data Engineering", "Python"]
     )
 
-    submit = SubmitField("Submit completed wellness activity")
+    submit = SubmitField("Submit practice")

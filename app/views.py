@@ -24,6 +24,9 @@ def main_index():
     return render_template("index.html")
 
 
+# <------------------- Analytics Utilities ------------------->
+
+
 @main.route("/percdiff", methods=["GET", "POST"])
 def render():
 
@@ -39,6 +42,35 @@ def render():
         return render_template("percdiff.html", form=form, something=results)
 
     return render_template("percdiff.html", form=form)
+
+
+@main.route("/adobeparser")
+def adobeparser():
+
+    return render_template("adobeparser01.html")
+
+
+### In progress endpoints
+
+
+@main.route("/gtmhunter", methods=["GET", "POST"])
+def gtmhunter():
+
+    return render_template("404.html")
+
+
+@main.route("/viewhtml/<id>")
+def viewhtml(id):
+
+    # save_htmls_names_to_sheet()
+    html_list = get_html_list_from_sheets()
+
+    single_html = html_list[id]
+
+    return render_template("htmlviewer.html", single_html)
+
+
+# <------------------- Wellness Utilities ------------------->
 
 
 @main.route("/weightlog", methods=["GET", "POST"])
@@ -81,23 +113,6 @@ def log_health_page():
         return redirect(url_for("main.log_health_page"))
 
     return render_template("healthlog.html", weight_form=weight_form)
-
-
-@main.route("/gtmhunter", methods=["GET", "POST"])
-def gtmhunter():
-
-    return render_template("404.html")
-
-
-@main.route("/viewhtml/<id>")
-def viewhtml(id):
-
-    # save_htmls_names_to_sheet()
-    html_list = get_html_list_from_sheets()
-
-    single_html = html_list[id]
-
-    return render_template("htmlviewer.html", single_html)
 
 
 @main.route("/wellness", methods=["GET", "POST"])

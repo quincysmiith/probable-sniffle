@@ -7,13 +7,13 @@ Functional Tools:
 
 - Percentage difference calculator
 - Weight Tracker
+- Wellness Tracker
+- Adobe call parser
 
 To Do Tools:
 
 - Exercise Tracker
 - Har file parser
 - GTM Hunter
-- Adobe call parser
-- Yoga / stretch day tracker
-- 1 hour reading day tracker
 - slack functions :: Weather updater, surf conditions
+- UTM builder

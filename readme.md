@@ -9,11 +9,12 @@ Functional Tools:
 - Weight Tracker
 - Wellness Tracker
 - Adobe call parser
+- Har file parser
 
-To Do Tools:
+To Do:
 
 - Exercise Tracker
-- Har file parser
 - GTM Hunter
 - slack functions :: Weather updater, surf conditions
 - UTM builder
+- Add usage video / gif to Adobe call parser tool.

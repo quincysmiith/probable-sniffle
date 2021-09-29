@@ -1,15 +1,28 @@
-from flask import Blueprint, render_template, redirect, url_for, flash
+from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask.helpers import url_for
+from werkzeug.utils import secure_filename
 from .forms import PercDiffForm, WeightForm, YogaForm
 from .helpers import (
     google_sheets_connection,
     perc_diff,
     save_htmls_names_to_sheet,
     tidy_acceptable_users,
+    allowed_har_file,
+    extract_adobe_from_har,
 )
 from icecream import ic
 from dateutil.parser import parse
 from datetime import datetime
+import os
+import pathlib
+
+# directory of script being run
+path = os.path.abspath(os.path.dirname(__file__))
+
+# directory to save files
+upload_folder = pathlib.Path(path) / 'uploads'
+if not os.path.exists(upload_folder):
+    os.makedirs(upload_folder)
 
 main = Blueprint("main", __name__)
 
@@ -68,6 +81,36 @@ def viewhtml(id):
     single_html = html_list[id]
 
     return render_template("htmlviewer.html", single_html)
+
+
+
+
+@main.route('/harparser', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # if user does not select file, browser also
+        # submit an empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file and allowed_har_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(upload_folder, "temp.har"))
+
+            # TO DO: parse har file and return json.
+            parsed_har = extract_adobe_from_har(file_path_to_har_file=os.path.join(upload_folder, "temp.har"))
+            #parsed_har = "A string"
+            
+            
+            
+            return render_template("harparser.html", display_results = parsed_har)
+
+    return render_template("harparser.html")
 
 
 # <------------------- Wellness Utilities ------------------->

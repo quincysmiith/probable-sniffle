@@ -15,6 +15,7 @@ gunicorn = "*"
 icecream = "*"
 boto3 = "*"
 python-dateutil = "*"
+haralyzer = "*"
 
 [requires]
 python_version = "3.7"

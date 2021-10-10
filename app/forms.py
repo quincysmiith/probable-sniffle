@@ -11,6 +11,8 @@ class PercDiffForm(FlaskForm):
 
 
 class WeightForm(FlaskForm):
+    
+
     user = StringField("User", validators=[DataRequired()])
     weight = FloatField(
         "Weight", validators=[DataRequired(), NumberRange(min=0, max=150)]
@@ -24,9 +26,14 @@ class WeightForm(FlaskForm):
                 message="Date should be in format YYYY-MM-DD",
             ),
         ],
-        default=str(datetime.utcnow().date()),
     )
     submit = SubmitField("Submit")
+
+    def __init__(self):
+        super().__init__()
+        # ensure default date in field is always updated.
+        if not self.date.data:
+            self.date.data = str(datetime.utcnow().date())
 
 
 class YogaForm(FlaskForm):

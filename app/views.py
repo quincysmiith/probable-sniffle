@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask.helpers import url_for
 from werkzeug.utils import secure_filename
-from .forms import PercDiffForm, WeightForm, YogaForm
+from .forms import PercDiffForm, WeightForm, YogaForm, MovementPracticeForm
 from .helpers import (
     google_sheets_connection,
     perc_diff,
@@ -20,7 +20,7 @@ import pathlib
 path = os.path.abspath(os.path.dirname(__file__))
 
 # directory to save files
-upload_folder = pathlib.Path(path) / 'uploads'
+upload_folder = pathlib.Path(path) / "uploads"
 if not os.path.exists(upload_folder):
     os.makedirs(upload_folder)
 
@@ -83,32 +83,30 @@ def viewhtml(id):
     return render_template("htmlviewer.html", single_html)
 
 
-
-
-@main.route('/harparser', methods=['GET', 'POST'])
+@main.route("/harparser", methods=["GET", "POST"])
 def upload_file():
-    if request.method == 'POST':
+    if request.method == "POST":
         # check if the post request has the file part
-        if 'file' not in request.files:
-            flash('No file part')
+        if "file" not in request.files:
+            flash("No file part")
             return redirect(request.url)
-        file = request.files['file']
+        file = request.files["file"]
         # if user does not select file, browser also
         # submit an empty part without filename
-        if file.filename == '':
-            flash('No selected file')
+        if file.filename == "":
+            flash("No selected file")
             return redirect(request.url)
         if file and allowed_har_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(upload_folder, "temp.har"))
 
             # TO DO: parse har file and return json.
-            parsed_har = extract_adobe_from_har(file_path_to_har_file=os.path.join(upload_folder, "temp.har"))
-            #parsed_har = "A string"
-            
-            
-            
-            return render_template("harparser.html", display_results = parsed_har)
+            parsed_har = extract_adobe_from_har(
+                file_path_to_har_file=os.path.join(upload_folder, "temp.har")
+            )
+            # parsed_har = "A string"
+
+            return render_template("harparser.html", display_results=parsed_har)
 
     return render_template("harparser.html")
 
@@ -184,3 +182,33 @@ def wellness():
         return redirect(url_for("main.wellness"))
 
     return render_template("wellnesslog.html", yoga_form=yoga_form)
+
+
+@main.route("/movementpractice", methods=["GET", "POST"])
+def movement_practice():
+
+    movement_practice_form = MovementPracticeForm()
+
+    if movement_practice_form.validate_on_submit():
+        gc = google_sheets_connection()
+        sh = gc.open("Wellness Log")
+        worksheet = sh.worksheet("movement_practice_log")
+
+        user = movement_practice_form.user.data
+        activity = movement_practice_form.activity.data
+        a_date = str(datetime.utcnow().date())
+
+        user = tidy_acceptable_users(user)
+
+        if user in ["marquin", "caroline"]:
+            worksheet.append_row([user, activity, a_date])
+
+            my_message = f"{user} logged a {activity} practice on {a_date}."
+            flash(my_message)
+            ic(my_message)
+
+        return redirect(url_for("main.movement_practice"))
+
+    return render_template(
+        "movementpracticelog.html", movement_practice_form=movement_practice_form
+    )

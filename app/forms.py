@@ -11,7 +11,6 @@ class PercDiffForm(FlaskForm):
 
 
 class WeightForm(FlaskForm):
-    
 
     user = StringField("User", validators=[DataRequired()])
     weight = FloatField(
@@ -48,12 +47,21 @@ class YogaForm(FlaskForm):
     submit = SubmitField("Submit wellness activity")
 
 
-class PracticeForm(FlaskForm):
+class MovementPracticeForm(FlaskForm):
 
     user = StringField("User", validators=[DataRequired()])
 
     activity = SelectField(
-        u"Wellness Activity", choices=["Poker", "Surfing", "Data Engineering", "Python"]
+        u"Practice Activity",
+        choices=[
+            "Handstand",
+            "L-sit",
+            "Pistol Squat",
+            "Poker",
+            "Surfing",
+            "Data Engineering",
+            "Python",
+        ],
     )
 
     submit = SubmitField("Submit practice")

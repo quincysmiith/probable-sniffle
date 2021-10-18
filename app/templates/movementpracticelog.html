@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>Practice Logger</h1>
+        <p> Track practices of various activities</p>
+    </div>
+</div>
+
+<div class="container">
+    <form action="/movementpractice" method="POST">
+        {{ movement_practice_form.hidden_tag() }}
+        <div class="form-group">
+            <p></p>
+            {{ movement_practice_form.user.label }} 
+            <p></p>
+            {{ movement_practice_form.user() }}
+            <p></p>
+        </div>
+
+        <div class="form-group">
+            <p></p>
+            {{ movement_practice_form.activity.label }} 
+            <p></p>
+            {{ movement_practice_form.activity() }}
+            <p></p>
+        </div>
+        <div>
+            <p></p>
+            <p></p>
+            <p></p>
+            {{ movement_practice_form.submit() }}
+        </div>
+        
+    </form>
+
+
+    {% for field, errors in movement_practice_form.errors.items() %}
+    <div class="alert alert-warning">
+        {{ movement_practice_form[field].label }}: {{ ', '.join(errors) }}
+    </div>
+    {% endfor %}
+
+
+</div>
+{% endblock %}
